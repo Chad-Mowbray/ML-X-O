@@ -17,6 +17,7 @@ export async function postData(action, processedData=null, category=null) {
   const url = chooseUrl(action)
   console.log(url)
   const body = {data: processedData, category: category}
+  console.log("body", body)
   const response = await fetch(url, {
     method: "POST",
     headers: {'Content-Type': 'application/json'},

@@ -13,7 +13,7 @@ class Process(APIView):
         return Response(resp, headers={"Access-Control-Allow-Origin": "*"})
     
     def post(self, request):
-        prepared = prepare(request.data["data"])
+        prepared = prepare([x for y in request.data["data"] for x in y])#prepare(request.data["data"])
         best_guess = guess(prepared)
         return Response({"best_guess": best_guess}, headers={"Access-Control-Allow-Origin": "*"})
    
@@ -28,9 +28,13 @@ class Sample(APIView):
     def post(self, request):
         print("in sample post")
         sample = request.data
+        print("sample: ", sample)
+        sample["data"] = [x for y in sample["data"] for x in y] # remove dimention for consistency
         print(sample)
         serializer = SampleDataSerializer(data=sample)
         if serializer.is_valid(raise_exception=True):
+            print("valid serializer...")
+            print(serializer.validated_data)
             sample_saved = serializer.save()
         return Response({"result": f"{sample_saved.category} saved"}, headers={"Access-Control-Allow-Origin": "*"})
 
@@ -47,6 +51,6 @@ class UpdateModel(APIView):
         all_samples = SampleData.objects.all()
         samples = [add_sample(s.data, s.category) for s in all_samples] 
         # use samples to retrain a model
-        train(samples)
+        score = train(samples)
         # returns the accuracy of the model (if it's not high enough, you can retrain)
-        return Response({"update": "resp"},headers={"Access-Control-Allow-Origin": "*"})
+        return Response({"score": score},headers={"Access-Control-Allow-Origin": "*"})
