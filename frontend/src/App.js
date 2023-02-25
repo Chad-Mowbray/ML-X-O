@@ -1,8 +1,8 @@
 import './App.css';
 import Home from './components/Home'
-import Guess from './components/UpdateModel'
+import Guess from './components/Guess'
 import Trainer from './components/Trainer'
-import UpdateModel from './components/Guess';
+import UpdateModel from './components/UpdateModel';
 import {HashRouter, Routes, Route} from 'react-router-dom'
 
 

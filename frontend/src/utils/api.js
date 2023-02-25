@@ -28,5 +28,8 @@ export async function postData(action, processedData=null, category=null) {
 
 export async function cleanAndPost(action, rawData=null, category=null){
   let cleaned = preProcess(rawData)
-  return postData(action, cleaned, category)
+  console.log("cleaned: ", cleaned)
+  const res = await postData(action, cleaned, category)
+  console.log("res: ", res)
+  return res
 }

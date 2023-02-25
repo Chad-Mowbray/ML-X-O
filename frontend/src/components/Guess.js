@@ -1,7 +1,6 @@
 import {Component, createRef} from "react";
 import { cleanAndPost } from "../utils/api";
-import { getCanvas } from "./Canvas";
- 
+import MyCanvas from "./MyCanvas";
 class Guess extends Component {
   
   canvas = createRef()
@@ -13,8 +12,8 @@ class Guess extends Component {
 
   handlePost = async (action, category=null) => {
     const data = await this.canvas.current.exportPaths()
-    const cleanedData = cleanAndPost(action, data, category)
-    this.setState({"guess": cleanedData})
+    const res = await cleanAndPost(action, data, category)
+    this.setState({"guess": JSON.stringify(res["best_guess"])})
   }
 
   reset = () => {
@@ -27,18 +26,16 @@ class Guess extends Component {
     return (
       <div className="center-within colored">
         <div className="top-margin">
-          {getCanvas()}
-         </div>
+          <MyCanvas canvas={this.canvas}/>
+        </div>
         <button className="btn-small waves-effect waves-light" 
           onClick={() => this.handlePost("guess")}>Guess</button>
-    
-          <button className="btn-small waves-effect waves-light red" 
-          onClick= {() => this.reset()}>Clear</button>
+        <button className="btn-small waves-effect waves-light red" 
+        onClick= {() => this.reset()}>Clear</button>
           
-          { this.state.guess && 
-          <p className="message">You probably drew an "{this.state.guess}"</p>}
-
-        </div>
+        { this.state.guess && 
+        <p className="message">You probably drew an "{this.state.guess}"</p>}
+      </div>
     );
   }
 };

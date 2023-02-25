@@ -7,9 +7,9 @@ const UpdateModel = () => {
 
   const [data, setData] = useState()
 
-  const handleClick = (e) => {
-      const d = postData("update")
-      setData({"data": d["update"]})
+  const handleClick = async (e) => {
+      const d = await postData("update")
+      setData({"data": JSON.stringify(d["update"])})
     }
   
   return(

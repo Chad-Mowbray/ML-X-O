@@ -1,9 +1,7 @@
 import {Component, createRef} from "react";
 import { cleanAndPost } from "../utils/api";
-import { Button } from "./Button"
-import { getCanvas } from "../utils/canvas";
+import MyCanvas  from "./MyCanvas";
 
- 
  
 class Trainer extends Component {
 
@@ -13,11 +11,10 @@ class Trainer extends Component {
     "train": null,
   }
 
-
   handlePost = async (action, category=null) => {
     const data = await this.canvas.current.exportPaths()
-    const cleanedData = cleanAndPost(action, data, category)
-    this.setState({"train": cleanedData})
+    const res = await cleanAndPost(action, data, category)
+    this.setState({"train": JSON.stringify(res["result"])})
   }
 
   reset = () => {
@@ -29,8 +26,8 @@ class Trainer extends Component {
     return (
       <div className="center-within colored">
         <div className="top-margin">
-          {getCanvas()}
-         </div>
+          <MyCanvas canvas={this.canvas}/>
+        </div>
         <div>
           <button className="btn-small waves-effect waves-light blue"           
           onClick={() => this.handlePost("sample", "X")}>Train X</button>
@@ -41,9 +38,7 @@ class Trainer extends Component {
           
           { this.state.train && 
           <p className="message">Thanks for submitting an "{this.state.train} for training"</p>}
-
         </div>
-        
       </div>
     );
   }
