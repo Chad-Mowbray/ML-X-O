@@ -3,15 +3,15 @@ const BASE_URL = process.env.REACT_APP_BASE_URL || "localhost"
 
 const urls = {
   guess: `http://${BASE_URL}/api/guess/`,
-  sample: `http://${BASE_URL}/api/provide-sample/`
+  sample: `http://${BASE_URL}/api/provide-sample/`,
+  update: `http://${BASE_URL}/api/update-model/`
 }
 
 function chooseUrl(key) {
   return urls[key]
 }
 
-
-export async function postData(processedData, action, category=null) {
+export async function postData(action, processedData=null, category=null) {
   const url = chooseUrl(action)
   console.log(url)
   const body = {data: processedData, category: category}

@@ -3,19 +3,18 @@ import { ReactSketchCanvas } from "react-sketch-canvas";
 import { preProcess } from "../utils/processor";
 import { postData } from "../utils/api";
  
- 
-class UpdateModel extends Component {
-
+class Guess extends Component {
+  
+  
   canvas = createRef();
-
   state = {
-    "confirmation": null,
+    "guess": null,
   }
 
 
-  handlePost = async (processedData, action, category=null) => {
+  handlePost = async (action, processedData=null, category=null) => {
     const data = postData(processedData, action, category)
-    this.setState({"confirmation": data})
+    this.setState({"guess": data})
   }
  
   render() {
@@ -23,39 +22,26 @@ class UpdateModel extends Component {
       <div className="center-within colored">
         <div className="top-margin">
           <ReactSketchCanvas
-            
             ref={this.canvas}
             strokeWidth={10}
             strokeColor="black"
             width="99px"
-            height="99px"
-          />
+            height="99px"/>
          </div>
-        <div>
-          <button className="btn-small waves-effect waves-light blue"           
+        <button className="btn-small waves-effect waves-light" 
           onClick={() => {
             this.canvas.current
               .exportPaths()
               .then(data => {
                 let cleaned = preProcess(data)
-                postData(cleaned, "sample", "X")
+                postData("guess", cleaned)
               })
               .catch(e => {
                 console.log(e);
               });
-          }}>Train X</button>
-          <button className="btn-small waves-effect waves-light blue"           
-          onClick={() => {
-            this.canvas.current
-              .exportPaths()
-              .then(data => {
-                let cleaned = preProcess(data)
-                postData(cleaned, "sample", "O")
-              })
-              .catch(e => {
-                console.log(e);
-              });
-          }}>Train O</button>
+          }}
+        >Guess</button>
+      
           <button className="btn-small waves-effect waves-light red" 
           onClick= {() => {
             this.canvas.current.resetCanvas()
@@ -67,10 +53,8 @@ class UpdateModel extends Component {
           { this.state.guess && <p className="message">You probably drew an "{this.state.guess}"</p>}
 
         </div>
-        
-      </div>
     );
   }
 };
 
-export default UpdateModel
+export default Guess
