@@ -1,7 +1,7 @@
 import {Component, createRef} from "react";
 import { cleanAndPost } from "../utils/api";
 import { Button } from "./Button"
-import { getCanvas } from "./Canvas";
+import { getCanvas } from "../utils/canvas";
 
  
  
