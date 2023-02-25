@@ -18,11 +18,11 @@ def save_model(model):
 def train(samples):
     train_samples, test_samples = get_train_test_split(samples)
     X = [s["processed"] for s in train_samples]
-    Y = [s["catetory"] for s in train_samples]
+    Y = [s["category"] for s in train_samples]
     clf = GaussianNB()
     clf.fit(X, Y)
     test_x = [s["processed"] for s in test_samples]
-    test_y = [s["catetory"] for s in test_samples]
+    test_y = [s["category"] for s in test_samples]
     score = clf.score(test_x, test_y)
     print(score)
     save_model(clf)

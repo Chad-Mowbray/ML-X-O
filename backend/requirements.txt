@@ -12,4 +12,4 @@ scipy==1.10.1
 sqlparse
 threadpoolctl==2.1.0
 whitenoise==5.2.0
-djongo==1.3.6
+

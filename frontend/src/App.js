@@ -1,13 +1,23 @@
 import './App.css';
-import Canvas from './Canvas'
-import Header from './Header'
+import Home from './components/Home'
+import Guess from './components/Guess'
+import Trainer from './components/Trainer'
+import UpdateModel from './components/UpdateModel';
+import {HashRouter, Routes, Route} from 'react-router-dom'
 
 
 function App() {
   return (
     <div className="">
-      <Header />
-      <Canvas />
+      <HashRouter>
+        <Routes>
+          <Route path="/training-data" element={<Trainer />}/>
+          <Route path="/guess" element={<Guess />}/>
+          <Route path="/update-model" element={<UpdateModel />}/>
+          <Route exact path="/"  element={ <Home />}/>
+        </Routes>
+      
+      </HashRouter>
     </div>
   );
 }
