@@ -1,4 +1,6 @@
 import {Component, createRef} from "react";
+import { Link } from 'react-router-dom'
+
 import { cleanAndPost } from "../utils/api";
 import MyCanvas from "./MyCanvas";
 class Guess extends Component {
@@ -24,18 +26,21 @@ class Guess extends Component {
  
   render() {
     return (
-      <div className="center-within colored">
-        <div className="top-margin">
-          <MyCanvas canvas={this.canvas}/>
+      <>
+        <div className="link"><Link to={"/"}>Home</Link></div>
+        <div className="center-within colored">
+          <div className="top-margin">
+            <MyCanvas canvas={this.canvas}/>
+          </div>
+          <button className="btn-small waves-effect waves-light" 
+            onClick={() => this.handlePost("guess")}>Guess</button>
+          <button className="btn-small waves-effect waves-light red" 
+          onClick= {() => this.reset()}>Clear</button>
+            
+          { this.state.guess && 
+          <p className="message">You probably drew an "{this.state.guess}"</p>}
         </div>
-        <button className="btn-small waves-effect waves-light" 
-          onClick={() => this.handlePost("guess")}>Guess</button>
-        <button className="btn-small waves-effect waves-light red" 
-        onClick= {() => this.reset()}>Clear</button>
-          
-        { this.state.guess && 
-        <p className="message">You probably drew an "{this.state.guess}"</p>}
-      </div>
+      </>
     );
   }
 };
