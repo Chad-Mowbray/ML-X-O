@@ -9,6 +9,7 @@ class Guess extends Component {
 
   state = {
     "guess": null,
+    "num_samples": 0
   }
 
 
@@ -16,19 +17,19 @@ class Guess extends Component {
     const data = await this.canvas.current.exportPaths()
     const res = await cleanAndPost(action, data, category)
     this.reset()
-    this.setState({"guess": res["best_guess"]})
+    this.setState({guess: res["best_guess"], num_samples: res["num_samples"]})
   }
 
   reset = () => {
     this.canvas.current.resetCanvas()
-    this.setState({guess: null})
+    this.setState({guess: null, num_samples: this.state.num_samples})
   }
 
   getMessage = () => {
     if (this.state.guess === "NONE") {
       return <Link to="/training-data">The model has not been trained yet.</Link>
     } else {
-      return`You probably drew an ${this.state.guess}`
+      return`You probably drew an ${this.state.guess}.  This model was trained on ${this.state.num_samples} examples`
     }
   }
 

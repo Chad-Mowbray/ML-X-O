@@ -16,7 +16,8 @@ class Process(APIView):
         try:
             prepared = prepare([x for y in request.data["data"] for x in y])#prepare(request.data["data"])
             best_guess = guess(prepared)
-            return Response({"best_guess": best_guess})
+            num_samples = SampleData.objects.all().count()
+            return Response({"best_guess": best_guess, "num_samples": num_samples})
         except:
             return Response({"best_guess": "NONE"})
    
