@@ -24,7 +24,6 @@ def train(samples):
     test_x = [s["processed"] for s in test_samples]
     test_y = [s["category"] for s in test_samples]
     score = clf.score(test_x, test_y)
-    print(score)
     save_model(clf)
     return score
 

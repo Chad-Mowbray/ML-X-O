@@ -3,9 +3,7 @@ import pickle
 
 def prepare(data):
     prepared = [ map(lambda x: x % 10, coord) for coord in data ]
-    print("prepared: ", prepared)
     base = [ [[0] for _ in range(0,10) ] for _ in range(0,10)]
-    print("base: ", base)
     for x,y in prepared:
         base[x][y] = [1]
     flattened_res = [x[0] for y in base for x in y]
@@ -14,7 +12,6 @@ def prepare(data):
 def add_sample(data, category):
     category = category
     processed = prepare(data)
-    print(processed)
     return {"processed": processed, "category": category}
 
 
