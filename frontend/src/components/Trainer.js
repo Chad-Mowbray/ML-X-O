@@ -15,6 +15,7 @@ class Trainer extends Component {
   handlePost = async (action, category=null) => {
     const data = await this.canvas.current.exportPaths()
     const res = await cleanAndPost(action, data, category)
+    this.reset()
     this.setState({"train": JSON.stringify(res["result"])})
   }
 
@@ -40,7 +41,7 @@ class Trainer extends Component {
             onClick={() => this.reset()}>Clear</button>
             
             { this.state.train && 
-            <p className="message">Thanks for submitting an "{this.state.train} for training"</p>}
+            <p className="message">Thanks for submitting an {this.state.train} for training</p>}
           </div>
         </div>
       </>

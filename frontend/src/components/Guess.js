@@ -15,6 +15,7 @@ class Guess extends Component {
   handlePost = async (action, category=null) => {
     const data = await this.canvas.current.exportPaths()
     const res = await cleanAndPost(action, data, category)
+    this.reset()
     this.setState({"guess": JSON.stringify(res["best_guess"])})
   }
 

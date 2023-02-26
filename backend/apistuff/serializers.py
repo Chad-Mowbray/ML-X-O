@@ -7,6 +7,4 @@ class SampleDataSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
 
     def create(self, validated_data):
-        print("in create, validated_data: ", validated_data)
         return SampleData.objects.create(**validated_data)
-        # return SampleData.objects.create(data=validated_data["data"], category=validated_data["category"])
