@@ -9,7 +9,7 @@ const UpdateModel = () => {
 
   const handleClick = async (e) => {
       const d = await postData("update")
-      setData(JSON.stringify(d["score"]))
+      setData(d["score"])
     }
   
   return(

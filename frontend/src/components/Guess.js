@@ -1,58 +1,55 @@
-import {Component, createRef} from "react";
+import {createRef, useState} from "react";
 import { Link } from 'react-router-dom'
 import { cleanAndPost } from "../utils/api";
 import MyCanvas from "./MyCanvas";
 
-class Guess extends Component {
+const Guess = () => {
   
-  canvas = createRef()
+  const canvas = createRef()
 
-  state = {
-    "guess": null,
-    "num_samples": 0
-  }
+  const [guess, setGuess] = useState(null)
+  const [numSamples, setNumSamples] = useState(0)
 
 
-  handlePost = async (action, category=null) => {
-    const data = await this.canvas.current.exportPaths()
+  const handlePost = async (action, category=null) => {
+    const data = await canvas.current.exportPaths()
     const res = await cleanAndPost(action, data, category)
-    this.reset()
-    this.setState({guess: res["best_guess"], num_samples: res["num_samples"]})
+    reset()
+    setGuess(res["best_guess"])
+    setNumSamples(res["num_samples"])
   }
 
-  reset = () => {
-    this.canvas.current.resetCanvas()
-    this.setState({guess: null, num_samples: this.state.num_samples})
+  const reset = () => {
+    canvas.current.resetCanvas()
+    setGuess(null)
   }
 
-  getMessage = () => {
-    if (this.state.guess === "NONE") {
+  const getMessage = () => {
+    if (guess === "NONE") {
       return <Link to="/training-data">The model has not been trained yet.</Link>
     } else {
-      return`You probably drew an ${this.state.guess}.  This model was trained on ${this.state.num_samples} examples`
+      return`You probably drew an ${guess}.  This model was trained on ${numSamples} examples`
     }
   }
 
- 
-  render() {
     return (
       <>
         <div className="link"><Link to={"/"}>Home</Link></div>
         <div className="center-within colored">
           <div className="top-margin">
-            <MyCanvas canvas={this.canvas}/>
+            <MyCanvas canvas={canvas}/>
           </div>
           <button className="btn-small waves-effect waves-light" 
-            onClick={() => this.handlePost("guess")}>Guess</button>
+            onClick={() => handlePost("guess")}>Guess</button>
           <button className="btn-small waves-effect waves-light red" 
-          onClick= {() => this.reset()}>Clear</button>
+          onClick= {reset}>Clear</button>
             
-          { this.state.guess && 
-          <p className="message">{this.getMessage()}</p>}
+          { guess && 
+          <p className="message">{getMessage()}</p>}
         </div>
       </>
     );
-  }
+
 };
 
 export default Guess

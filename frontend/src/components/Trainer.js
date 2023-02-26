@@ -1,63 +1,56 @@
-import {Component, createRef} from "react";
+import {useState, createRef} from "react";
 import { Link } from 'react-router-dom'
 import { cleanAndPost } from "../utils/api";
 import MyCanvas  from "./MyCanvas";
 
  
-class Trainer extends Component {
+const Trainer = () => {
 
-  canvas = createRef()
+  const canvas = createRef()
 
-  state = {
-    train: null,
-    xCount: 0,
-    oCount: 0
-  }
+  const [train, setTrain] = useState(null)
+  const [xCount, setXCount] = useState(0)
+  const [oCount, setOCount] = useState(0)
 
-  handlePost = async (action, category=null) => {
-    const data = await this.canvas.current.exportPaths()
+  const handlePost = async (action, category=null) => {
+    const data = await canvas.current.exportPaths()
     const res = await cleanAndPost(action, data, category)
-    this.reset()
-    this.setState({
-      train: res["result"],
-      xCount: category === "X" ? this.state.xCount + 1 : this.state.xCount,
-      oCount: category === "O" ? this.state.oCount + 1 : this.state.oCount
-    })
+    reset()
+    setTrain(res["result"])
+    setXCount(category === "X" ? xCount + 1 : xCount)
+    setOCount(category === "O" ? oCount + 1 : oCount)
   }
 
-  reset = () => {
-    this.canvas.current.resetCanvas()
-    this.setState({guess: null})
+  const reset = () => {
+    canvas.current.resetCanvas()
+    setTrain(null)
   }
  
-  render() {
     return (
       <>
         <div className="link"><Link to={"/"}>Home</Link></div>
         <div className="center-within colored">
           <div className="top-margin">
-            <MyCanvas canvas={this.canvas}/>
+            <MyCanvas canvas={canvas}/>
           </div>
           <div>
             <button className="btn-small waves-effect waves-light blue"           
-            onClick={() => this.handlePost("sample", "X")}>Train X</button>
+            onClick={() => handlePost("sample", "X")}>Train X</button>
             <button className="btn-small waves-effect waves-light blue"           
-            onClick={() => this.handlePost("sample", "O")}>Train O</button>
+            onClick={() => handlePost("sample", "O")}>Train O</button>
             <button className="btn-small waves-effect waves-light red" 
-            onClick={() => this.reset()}>Clear</button>
+            onClick={reset}>Clear</button>
             
-            { this.state.train && 
-            <p className="message">Thanks for submitting. {this.state.train} for training.</p>}
+            { train && 
+            <p className="message">Thanks for submitting. {train} for training.</p>}
           </div>
             <div className="counts">
-              <p>X count: {this.state.xCount}</p>
-              <p>O count: {this.state.oCount}</p>
+              <p>X count: {xCount}</p>
+              <p>O count: {oCount}</p>
             </div>
-     
         </div>
       </>
     );
-  }
 };
 
 export default Trainer
