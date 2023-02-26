@@ -3,8 +3,6 @@ import { postData } from "../utils/api";
 import { Link } from 'react-router-dom'
 
  
-
-
 const UpdateModel = () => {
 
   const [score, setData] = useState()

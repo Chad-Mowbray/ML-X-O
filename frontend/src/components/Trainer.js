@@ -9,14 +9,20 @@ class Trainer extends Component {
   canvas = createRef()
 
   state = {
-    "train": null,
+    train: null,
+    xCount: 0,
+    oCount: 0
   }
 
   handlePost = async (action, category=null) => {
     const data = await this.canvas.current.exportPaths()
     const res = await cleanAndPost(action, data, category)
     this.reset()
-    this.setState({"train": JSON.stringify(res["result"])})
+    this.setState({
+      train: res["result"],
+      xCount: category === "X" ? this.state.xCount + 1 : this.state.xCount,
+      oCount: category === "O" ? this.state.oCount + 1 : this.state.oCount
+    })
   }
 
   reset = () => {
@@ -41,8 +47,13 @@ class Trainer extends Component {
             onClick={() => this.reset()}>Clear</button>
             
             { this.state.train && 
-            <p className="message">Thanks for submitting an {this.state.train} for training</p>}
+            <p className="message">Thanks for submitting. {this.state.train} for training.</p>}
           </div>
+            <div className="counts">
+              <p>X count: {this.state.xCount}</p>
+              <p>O count: {this.state.oCount}</p>
+            </div>
+     
         </div>
       </>
     );
