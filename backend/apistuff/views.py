@@ -13,9 +13,12 @@ class Process(APIView):
         return Response(resp)
     
     def post(self, request):
-        prepared = prepare([x for y in request.data["data"] for x in y])#prepare(request.data["data"])
-        best_guess = guess(prepared)
-        return Response({"best_guess": best_guess})
+        try:
+            prepared = prepare([x for y in request.data["data"] for x in y])#prepare(request.data["data"])
+            best_guess = guess(prepared)
+            return Response({"best_guess": best_guess})
+        except:
+            return Response({"best_guess": "NONE"})
    
        
 class Sample(APIView):

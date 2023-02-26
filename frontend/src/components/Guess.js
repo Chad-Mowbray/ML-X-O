@@ -1,8 +1,8 @@
 import {Component, createRef} from "react";
 import { Link } from 'react-router-dom'
-
 import { cleanAndPost } from "../utils/api";
 import MyCanvas from "./MyCanvas";
+
 class Guess extends Component {
   
   canvas = createRef()
@@ -24,6 +24,14 @@ class Guess extends Component {
     this.setState({guess: null})
   }
 
+  getMessage = () => {
+    if (this.state.guess === "NONE") {
+      return <Link to="/training-data">The model has not been trained yet.</Link>
+    } else {
+      return`You probably drew an ${this.state.guess}`
+    }
+  }
+
  
   render() {
     return (
@@ -39,7 +47,7 @@ class Guess extends Component {
           onClick= {() => this.reset()}>Clear</button>
             
           { this.state.guess && 
-          <p className="message">You probably drew an "{this.state.guess}"</p>}
+          <p className="message">{this.getMessage()}</p>}
         </div>
       </>
     );
