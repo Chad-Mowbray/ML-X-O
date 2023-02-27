@@ -15,9 +15,7 @@ function chooseUrl(action) {
 
 export async function postData(action, rawLineData=null, category=null) {
   const url = chooseUrl(action)
-  console.log(url)
   const body = {rawLineData: rawLineData, category: category}
-  console.log("body", body)
   const response = await fetch(url, {
     method: "POST",
     headers: {'Content-Type': 'application/json'},
@@ -28,10 +26,7 @@ export async function postData(action, rawLineData=null, category=null) {
 }
 
 export async function cleanAndPost(action, rawData=null, category=null){
-  console.log("raw data: ", rawData)
   let rawLineData = getLinesRepr(rawData)
-  console.log("cleaned: ", rawLineData)
   const res = await postData(action, rawLineData, category)
-  console.log("res: ", res)
   return res
 }
