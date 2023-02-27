@@ -15,9 +15,11 @@ const UpdateModel = () => {
   return(
     <>
       <div className="link"><Link to={"/"}>Home</Link></div>
-      <p>Update the model including the most recent data</p>
-      <button onClick={handleClick}>Update</button>
-      {score && <p>Accuracy score on newly-trained model: {score}</p>}
+      <div className="update">
+        <p>Update the model including the most recent data</p>
+        <button onClick={handleClick}>Update</button>
+        {score && <p>Accuracy score on newly-trained model: {score}</p>}
+      </div>
     </>
   )
 }

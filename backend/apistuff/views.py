@@ -6,10 +6,6 @@ from .serializers import SampleDataSerializer
 from .training import train
 
 class Process(APIView):
-
-    def get(self, request, format=None):
-        resp = "Process endpoint"
-        return Response(resp)
     
     def post(self, request):
         try:

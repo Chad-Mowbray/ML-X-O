@@ -2,7 +2,6 @@ import pickle
 from sklearn.naive_bayes import GaussianNB
 from random import shuffle
 from math import trunc
-import numpy as np
 
 def get_train_test_split(samples):
     shuffle(samples)
@@ -26,7 +25,6 @@ def fit_model(X, Y):
     clf = GaussianNB()
     clf.fit(X, Y)
     return clf
-
 
 def train(samples):
     train_samples, test_samples = get_train_test_split(samples)

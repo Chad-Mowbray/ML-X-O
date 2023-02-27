@@ -2,7 +2,6 @@ from copy import deepcopy
 import pickle
 
 
-
 def prepare_db_samples_for_training(all_samples):
     return [{"processed": s.data, "category": s.category} for s in all_samples]
 

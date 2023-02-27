@@ -5,14 +5,13 @@ from .training import get_train_test_split, get_samples, fit_model
 from .processor import round_points, bucket_coord_points, get_zeroed_array, fill_zeroed_array, flatten_filled_array
 
 
-
 class TestTrain(TestCase):
 
     @classmethod
     def setUpClass(cls):
         cls.samples = [
-        {'processed': [choice([0,1]) for _ in range(100)], 'category': choice(["O","X"])} 
-        for _ in range(10)
+            {'processed': [choice([0,1]) for _ in range(100)], 'category': choice(["O","X"])} 
+            for _ in range(10)
         ]
         super().setUpClass()
 
@@ -31,7 +30,7 @@ class TestTrain(TestCase):
 
     def test_fit_model(self):
         train_samples, test_samples = get_train_test_split(self.samples)
-        X, Y, test_x, test_y = get_samples(train_samples, test_samples)
+        X, Y, _, _ = get_samples(train_samples, test_samples)
         model = fit_model(X,Y)
         self.assertIsInstance(model, GaussianNB)
 
@@ -45,7 +44,6 @@ class TestSampleProcessor(TestCase):
             for _ in range(2)
         ]
         super().setUpClass()
-
 
     def test_round_points(self): 
         print(self.raw_line_data)

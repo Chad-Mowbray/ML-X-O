@@ -10,7 +10,6 @@ const Guess = () => {
   const [guess, setGuess] = useState(null)
   const [numSamples, setNumSamples] = useState(0)
 
-
   const handlePost = async (action, category=null) => {
     const data = await canvas.current.exportPaths()
     const res = await cleanAndPost(action, data, category)
