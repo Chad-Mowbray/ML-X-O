@@ -1,7 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .processor import guess
-from .sample import transform_raw_line_data, prepare_db_samples_for_training
+from .processor import transform_raw_line_data, prepare_db_samples_for_training, guess
 from .models import SampleData
 from .serializers import SampleDataSerializer
 from .training import train
