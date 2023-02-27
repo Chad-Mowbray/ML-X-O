@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from .processor import guess
-from .sample import add_sample, prepare
+from .sample import transform_raw_line_data, prepare_db_samples_for_training
 from .models import SampleData
 from .serializers import SampleDataSerializer
 from .training import train
@@ -14,8 +14,9 @@ class Process(APIView):
     
     def post(self, request):
         try:
-            prepared = prepare([x for y in request.data["data"] for x in y])#prepare(request.data["data"])
-            best_guess = guess(prepared)
+            sample = request.data
+            flattened_filled_array = transform_raw_line_data(sample["rawLineData"])
+            best_guess = guess(flattened_filled_array)
             num_samples = SampleData.objects.all().count()
             return Response({"best_guess": best_guess, "num_samples": num_samples})
         except:
@@ -31,7 +32,7 @@ class Sample(APIView):
     
     def post(self, request):
         sample = request.data
-        sample["data"] = [x for y in sample["data"] for x in y] # remove dimension for consistency
+        sample["data"] = transform_raw_line_data(sample["rawLineData"])
         serializer = SampleDataSerializer(data=sample)
         if serializer.is_valid(raise_exception=True):
             sample_saved = serializer.save()
@@ -40,16 +41,8 @@ class Sample(APIView):
 
 class UpdateModel(APIView):
 
-    def get(self, request):
-        all_samples = SampleData.objects.all()
-        resp = [add_sample(s.data, s.category) for s in all_samples] 
-        return Response({"update": resp})
-
     def post(self, request):
-        # pull in all the data, transform it, train model, save model
         all_samples = SampleData.objects.all()
-        samples = [add_sample(s.data, s.category) for s in all_samples] 
-        # use samples to retrain a model
-        score = train(samples)
-        # returns the accuracy of the model (if it's not high enough, you can retrain)
+        prepared_db_samples_for_training = prepare_db_samples_for_training(all_samples)
+        score = train(prepared_db_samples_for_training)
         return Response({"score": score})

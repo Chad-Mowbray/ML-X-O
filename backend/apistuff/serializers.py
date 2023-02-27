@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import SampleData
 
 class SampleDataSerializer(serializers.Serializer):
-    data = serializers.ListField(child=serializers.ListField(child=serializers.IntegerField()))
+    data = serializers.ListField(child=serializers.IntegerField())
     category = serializers.CharField(max_length=1)
     id = serializers.IntegerField(read_only=True)
 
