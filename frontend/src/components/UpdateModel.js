@@ -6,7 +6,7 @@ import SignupIn from "./SignupIn";
  
 const UpdateModel = () => {
 
-  const [score, setData] = useState()
+  const [score, setScore] = useState()
   const [token, setToken] = useState()
  
   const login = (token) => {
@@ -15,13 +15,13 @@ const UpdateModel = () => {
 
   const handleClick = async (e) => {
       const d = await updateModelReq("update", token)
-      setData(d["score"])
+      setScore(d["score"])
     }
   
   return(
     <>
       <div className="link"><Link to={"/"}>Home</Link></div>
-      { !token && <SignupIn login={login}/>}
+        { !token && <SignupIn login={login}/>}
       <div className="update">
         <p>Update the model including the most recent data</p>
         <button onClick={handleClick}>Update</button>

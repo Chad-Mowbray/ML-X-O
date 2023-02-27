@@ -16,7 +16,6 @@ function App() {
           <Route path="/update-model" element={<UpdateModel />}/>
           <Route exact path="/"  element={ <Home />}/>
         </Routes>
-      
       </HashRouter>
     </div>
   );

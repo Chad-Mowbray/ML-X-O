@@ -41,7 +41,10 @@ class UpdateModel(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        all_samples = SampleData.objects.all()
-        prepared_db_samples_for_training = prepare_db_samples_for_training(all_samples)
-        score = train(prepared_db_samples_for_training)
-        return Response({"score": score})
+        try:
+            all_samples = SampleData.objects.all()
+            prepared_db_samples_for_training = prepare_db_samples_for_training(all_samples)
+            score = train(prepared_db_samples_for_training)
+            return Response({"score": score})
+        except:
+            return Response({"score": "No training data yet"})
