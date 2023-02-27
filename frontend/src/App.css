@@ -54,3 +54,17 @@ button {
   font-size: 1.5em;
   font-style: italic;
 }
+
+.signupin {
+  width: 30%;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding: 5px;
+  border: gray 2px solid;
+  border-radius: 20px;
+}
+
+.logBtn {
+  width: 40%;
+  margin-left: 6%;
+}

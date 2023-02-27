@@ -1,5 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
 from .processor import transform_raw_line_data, prepare_db_samples_for_training, guess
 from .models import SampleData
 from .serializers import SampleDataSerializer
@@ -35,6 +37,8 @@ class Sample(APIView):
 
 
 class UpdateModel(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def post(self, request):
         all_samples = SampleData.objects.all()
