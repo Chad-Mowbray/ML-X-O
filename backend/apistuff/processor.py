@@ -1,5 +1,6 @@
 from copy import deepcopy
 import pickle
+from .models import TrainedModel
 
 
 def prepare_db_samples_for_training(all_samples):
@@ -40,5 +41,6 @@ def transform_raw_line_data(raw_line_data):
     return flattened_filled_array
 
 def guess(data):
-    model = pickle.load(open("current_model.pickle", "rb"))
+    bin_model = TrainedModel.objects.latest('ts').model
+    model = pickle.loads(bin_model)
     return model.predict([data])[0]
