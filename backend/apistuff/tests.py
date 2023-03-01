@@ -46,7 +46,6 @@ class TestSampleProcessor(TestCase):
         super().setUpClass()
 
     def test_round_points(self): 
-        print(self.raw_line_data)
         rounded_points = round_points(self.raw_line_data)
         self.assertIsInstance(rounded_points, list)
         self.assertIsInstance(rounded_points[0], list)
