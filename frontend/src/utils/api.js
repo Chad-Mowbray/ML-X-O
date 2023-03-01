@@ -32,7 +32,6 @@ export async function updateModelReq(action, token) {
   const response = await fetch(url, {
     method: "POST",
     headers: {'Content-Type': 'application/json', "Authorization": `Token ${token}`},
-    // body: JSON.stringify(body)
   })
   const data = await response.json()
   return data

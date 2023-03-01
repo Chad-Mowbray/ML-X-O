@@ -44,13 +44,22 @@ button {
 }
 
 .counts {
-  margin-left: 180px;
-  margin-top: -210px;
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   font-weight: 300;
   font-size: 1.5em;
   font-style: italic;
+  text-align: center;
+  position: fixed;
+  top: 90px;
+  left: 230px;
+  background: rgb(195,103,34);
+  background: linear-gradient(0deg, rgba(195,103,34,0.11390493697478987) 0%, rgba(253,187,45,0.007462359943977592) 100%);
+  border-radius: 10%;
+}
+
+.txt {
+  font-weight: 600;
 }
 
 .signupin {

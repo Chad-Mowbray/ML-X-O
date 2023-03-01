@@ -45,8 +45,8 @@ const Trainer = () => {
             <p className="message">Thanks for submitting. {train} for training.</p>}
           </div>
             <div className="counts">
-              <p>X count: {xCount}</p>
-              <p>O count: {oCount}</p>
+              <p>X count: {<span className="txt">{xCount}</span>}</p>
+              <p>O count: {<span className="txt">{oCount}</span>}</p>
             </div>
         </div>
       </>
